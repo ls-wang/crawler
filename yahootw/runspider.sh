@@ -1,0 +1,1 @@
+scrapy crawl yahootw -o /data/yahoo2.csv -t csv
