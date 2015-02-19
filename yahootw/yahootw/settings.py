@@ -37,12 +37,12 @@ USER_AGENTS = [
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_3) AppleWebKit/535.20 (KHTML, like Gecko) Chrome/19.0.1036.7 Safari/535.20",
     "Opera/9.80 (Macintosh; Intel Mac OS X 10.6.8; U; fr) Presto/2.9.168 Version/11.52",
 ]
-STAT_DUMP = False
+STAT_DUMP = True
 LOG_ENABLED = True
 LOG_LEVEL = 'WARNING'
 
 # some sane limits by default (override if needed)
-CLOSESPIDER_PAGECOUNT = 1000
+# CLOSESPIDER_PAGECOUNT = 1000
 CLOSESPIDER_TIMEOUT = 3600
 
 RETRY_ENABLED = False
