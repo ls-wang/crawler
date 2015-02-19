@@ -1,6 +1,7 @@
 from scrapy.http import Request
+from scrapy.http import HtmlResponse
 from scrapy.contrib.spiders import CrawlSpider
-from scrapy.selector import HtmlXPathSelector
+from scrapy.selector import Selector
 from scrapy import log
 import string
 import re
@@ -21,11 +22,11 @@ class YahootwSpider(CrawlSpider):
     def parse_list(self, response):
         log.msg(response.url,level=log.WARNING)
         category = response.request.meta['category']
-        hxs = HtmlXPathSelector(response)
-        urls = hxs.select('//div[contains(@class,"story")]/div[contains(@class,"txt")]/h4/a/@href').extract()
+        hxs = Selector(response)
+        urls = hxs.xpath('//div[contains(@class,"story")]/div[contains(@class,"txt")]/h4/a/@href').extract()
         for url in urls:
             yield Request(self.domain_url+url, self.parse_article,meta={'category':category})
-        next = hxs.select('//ul[contains(@class,"future")]/li[1]/a[contains(@class,"yom-button")]/@href').extract()
+        next = hxs.xpath('//ul[contains(@class,"future")]/li[1]/a[contains(@class,"yom-button")]/@href').extract()
         if len(next)>0:
             yield Request(self.domain_url+next[0], self.parse_list, meta={'category':category})
 
@@ -33,13 +34,13 @@ class YahootwSpider(CrawlSpider):
         item = ArticleItem()
         item['category'] = response.request.meta['category']
         item['url'] = response.url
-        hxs = HtmlXPathSelector(response)
-        item['pagecategory'] = hxs.select('//div[@id="mediaarticlemenutemp"]/div[@class="bd"]/a[@class="path"][last()]/text()').extract()
-        item['title'] = hxs.select('//div[@id="mediaarticlehead"]/div/h1/text()').extract()
-        item['author'] = hxs.select('//div[@id="mediaarticlehead"]/div/cite/span[@class="fn"]/text()').extract()
-        item['provider'] = hxs.select('//div[@id="mediaarticlehead"]/div/cite/span[@class="provider org"]/text()').extract()
-        item['time'] = hxs.select('//div[@id="mediaarticlehead"]/div/cite/abbr/@title').extract()
-        item['content'] = hxs.select('//div[@id="mediaarticlebody"]/div[@class="bd"]/p/text()').extract()
+        hxs = Selector(response)
+        item['pagecategory'] = hxs.xpath('//div[@id="mediaarticlemenutemp"]/div[@class="bd"]/a[@class="path"][last()]/text()').extract()
+        item['title'] = hxs.xpath('//div[@id="mediaarticlehead"]/div/h1/text()').extract()
+        item['author'] = hxs.xpath('//div[@id="mediaarticlehead"]/div/cite/span[@class="fn"]/text()').extract()
+        item['provider'] = hxs.xpath('//div[@id="mediaarticlehead"]/div/cite/span[@class="provider org"]/text()').extract()
+        item['time'] = hxs.xpath('//div[@id="mediaarticlehead"]/div/cite/abbr/@title').extract()
+        item['content'] = hxs.xpath('//div[@id="mediaarticlebody"]/div[@class="bd"]/p/text()').extract()
         return self.clear_list(item)
 
     def clear_list(self,object):
