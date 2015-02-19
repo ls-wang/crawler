@@ -1,0 +1,2 @@
+# /Library/Java/JavaVirtualMachines/jdk1.7.0_72.jdk/Contents/Home/bin/java -agentlib:jdwp=transport=dt_socket,suspend=y,address=localhost:54706 -Dfile.encoding=UTF-8 -classpath /Users/lswang/Documents/workspace/WebCrawler/bin:/Users/lswang/Documents/workspace/WebCrawler/Lib/jsoup-1.7.3.jar crawler.webcrawler
+/Library/Java/JavaVirtualMachines/jdk1.7.0_72.jdk/Contents/Home/bin/java -Dfile.encoding=UTF-8 -classpath /Users/lswang/Documents/workspace/WebCrawler/bin:/Users/lswang/Documents/workspace/WebCrawler/Lib/jsoup-1.7.3.jar crawler.webcrawler
